@@ -1,0 +1,12 @@
+server:
+  port: 8000
+
+logging:
+  level:
+    root: DEBUG
+
+MONOLITH_URL: http://localhost:8080
+MOVIES_SERVICE_URL: http://localhost:8081 #сервис movies
+EVENTS_SERVICE_URL: http://localhost:8082
+GRADUAL_MIGRATION: "true" # вкл/выкл простого фиче-флага
+MOVIES_MIGRATION_PERCENT: "50" # процент миграции

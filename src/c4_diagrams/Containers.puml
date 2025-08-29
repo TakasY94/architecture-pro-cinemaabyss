@@ -1,0 +1,46 @@
+@startuml
+title Диаграмма контейнеров "Умный дом"
+
+top to bottom direction
+
+!includeurl https://raw.githubusercontent.com/RicardoNiepel/C4-PlantUML/master/C4_Component.puml
+
+Person(user, "Пользователь", "Пользователь онлайн-кинотеатра")
+
+Container_Boundary(WarmHouseSystem, "WarmHouse System") {
+  Container(WebApp, "Веб-приложение", "Java, Spring", "Веб приложение")
+  Container(MobileApp, "Мобильное приложение", "Kotlin, Swift", "Мобильное приложение для пользователей")
+  Container(SmartTvApp, "SmartTV приложение", "Kotlin", "SmartTV приложение интерфейс")
+  Container(ProxyServer, "Прокси/Балансер сервер", "Nginx", "Прокси сервер, балансировка нагрузки")
+  Container(Kafka, "Система обмена сообщениями", "Kafka", "Кафка events service: События фильмов,События пользователей,События платежей")
+  Container(UserService, "Управление пользователями", "Java, Spring", "Управление пользователями, коллекциями фильмов, подписками, история оценок")
+  Container(MoviesService, "Управление фильмами", "Java, Spring", "Сервис управления фильмами: метаданные, рейтинги, оценки, подборки")
+  Container(PaymentService, "Сервис оплаты/подписок", "Node.js", "Processes payments")
+  Container(Database, "База данных", "PostgreSQL", "Хранит информацию датчиков и сценарии")
+}
+
+Container_Boundary(RecomendationSystem, "Рекомендательная система") {
+Container(RabbitMq, "Система обмена сообщениями", "RabbitMq", "Рекомендательная система")
+}
+
+user --> MobileApp : "Использует мобильное приложение"
+user --> WebApp : "Использует веб-портал"
+user --> SmartTvApp : "Использует SmartTV приложение"
+MobileApp <--> ProxyServer
+WebApp <--> ProxyServer
+SmartTvApp <--> ProxyServer
+ProxyServer <--> UserService
+ProxyServer <--> MoviesService
+ProxyServer <--> PaymentService
+
+MoviesService --> RabbitMq
+
+PaymentService --> Kafka
+UserService --> Kafka
+MoviesService --> Kafka
+
+PaymentService --> Database
+UserService --> Database
+MoviesService --> Database
+
+@enduml
