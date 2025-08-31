@@ -31,9 +31,6 @@ public class ProxyController {
     @Value("${MOVIES_SERVICE_URL:http://movies-service:8081}")
     private String moviesServiceUrl;
 
-    @Value("${EVENTS_SERVICE_URL:http://events-service:8082}")
-    private String eventsServiceUrl;
-
     public ProxyController(RestTemplate restTemplate) {
         this.restTemplate = restTemplate;
     }

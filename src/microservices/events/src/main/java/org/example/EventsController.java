@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/events")
 public class EventsController {
 
     private static final Logger log = LoggerFactory.getLogger(EventsController.class);
@@ -21,19 +21,19 @@ public class EventsController {
         this.eventService = eventService;
     }
 
-    @PostMapping("/movies")
+    @PostMapping("/movie")
     public ResponseEntity<EventResponse> createMovieEvent(@RequestBody MovieEvent movieEvent) {
         log.info("Creating movie event: {}", movieEvent);
         return ResponseEntity.status(HttpStatus.CREATED).body(eventService.createMovieEvent(movieEvent));
     }
 
-    @PostMapping("/users")
+    @PostMapping("/user")
     public ResponseEntity<EventResponse> createUserEvent(@RequestBody UserEvent userEvent) {
         log.info("Creating user event: {}", userEvent);
         return ResponseEntity.status(HttpStatus.CREATED).body(eventService.createUserEvent(userEvent));
     }
 
-    @PostMapping("/payments")
+    @PostMapping("/payment")
     public ResponseEntity<EventResponse> createPaymentEvent(@RequestBody PaymentEvent paymentEvent) {
         log.info("Creating payment event: {}", paymentEvent);
         return ResponseEntity.status(HttpStatus.CREATED).body(eventService.createPaymentEvent(paymentEvent));
