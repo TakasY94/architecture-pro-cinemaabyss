@@ -35,12 +35,12 @@ ProxyServer <--> PaymentService
 
 MoviesService --> RabbitMq
 
-PaymentService --> Kafka
-UserService --> Kafka
-MoviesService --> Kafka
+PaymentService <--> Kafka
+UserService <--> Kafka
+MoviesService <--> Kafka
 
-PaymentService --> Database
-UserService --> Database
-MoviesService --> Database
+PaymentService <--> Database
+UserService <--> Database
+MoviesService <--> Database
 
 @enduml
